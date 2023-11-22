@@ -65,7 +65,7 @@ namespace SocketSync_Client_Human_Server_Human
                     ChatBox.Text = "Client connected to " +
                         socket.RemoteEndPoint?.ToString() + " " + DateTime.Now.ToString() + "\r\n";
 
-                    string message = "Hi server!";
+                    string message = ChatBox.GetLineText(ChatBox.GetLastVisibleLineIndex() - 1);
                     byte[]? msgByte = Encoding.Unicode.GetBytes(message);
                     socket.Send(msgByte, SocketFlags.None);
 

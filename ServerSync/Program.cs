@@ -26,17 +26,21 @@ namespace ServerSync
 
                 Socket handler = server.Accept();
 
-                //while(true)
+                //while (true)
                 //{
                     byte[] buffer = new byte[1024];
                     int received = handler.Receive(buffer, SocketFlags.None);
                     string response = Encoding.Unicode.GetString(buffer, 0, received);
                     Console.WriteLine(response);
 
-                    string str = "Hi client, I'm server" + DateTime.Now.ToString();
-                    byte[] msg = Encoding.Unicode.GetBytes(str);
+                    //if (response.IndexOf("<Bye>") > -1)
+                    //{
+                    //    break;
+                    //}
 
-                    Console.WriteLine(msg);
+                    Console.Write("Input message: ");
+                    string str = "Server: " + Console.ReadLine() + " " + DateTime.Now.ToString();
+                    byte[] msg = Encoding.Unicode.GetBytes(str);
 
                     handler.Send(msg);
 
