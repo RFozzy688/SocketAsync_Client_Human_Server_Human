@@ -21,11 +21,11 @@
         <TextBlock VerticalAlignment="Center" Margin="3" Grid.Row="0" Grid.Column="0">IP Address:</TextBlock>
         <TextBlock VerticalAlignment="Center" Margin="3" Grid.Row="0" Grid.Column="1">Port:</TextBlock>
 
-        <TextBox  VerticalAlignment="Center" Margin="3" Grid.Row="1" Grid.Column="0" PreviewTextInput="TextBox_PreviewTextInput">127.0.0.1</TextBox>
-        <TextBox VerticalAlignment="Center" Margin="3" Grid.Row="1" Grid.Column="1" PreviewTextInput="TextBox_PreviewTextInput_1">8080</TextBox>
+        <TextBox Name="IPAddressText" VerticalAlignment="Center" Margin="3" Grid.Row="1" Grid.Column="0" PreviewTextInput="TextBox_PreviewTextInput">127.0.0.1</TextBox>
+        <TextBox Name="PortText" VerticalAlignment="Center" Margin="3" Grid.Row="1" Grid.Column="1" PreviewTextInput="TextBox_PreviewTextInput_1">8080</TextBox>
 
-        <Button Margin="3" Width="200" Grid.ColumnSpan="2" Grid.Row="2" Grid.Column="0">Connect</Button>
+        <Button Name="BtnConnect" Margin="3" Width="200" Grid.ColumnSpan="2" Grid.Row="2" Grid.Column="0" Click="Connect_Click">Connect</Button>
 
-        <TextBox ScrollViewer.VerticalScrollBarVisibility="Auto" Margin="5" Grid.ColumnSpan="2" Grid.Row="3" Grid.Column="0" AcceptsReturn="True"/>
+        <TextBox Name="ChatBox" ScrollViewer.VerticalScrollBarVisibility="Auto" Margin="5" Grid.ColumnSpan="2" Grid.Row="3" Grid.Column="0" AcceptsReturn="True"/>
     </Grid>
 </Window>

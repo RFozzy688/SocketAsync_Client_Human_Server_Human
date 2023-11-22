@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net;
+using System.Net.Sockets;
 using System.Text;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
@@ -43,6 +45,47 @@ namespace SocketAsync_Client_Human_Server_Human
         private static bool IsTextAllowed_1(string text)
         {
             return !_port.IsMatch(text);
+        }
+
+        private void Connect_Click(object sender, RoutedEventArgs e)
+        {
+            BtnConnect.IsEnabled = false;
+
+            IPAddress ipAddress = IPAddress.Parse(IPAddressText.Text);
+            int port = Int32.Parse(PortText.Text);
+
+            IPEndPoint ipEndPoint = new IPEndPoint(ipAddress, port);
+            using Socket socket = new(ipEndPoint.AddressFamily, SocketType.Stream, ProtocolType.Tcp);
+
+            try
+            {
+                socket.Connect(ipEndPoint);
+
+                ChatBox.Text = socket.RemoteEndPoint?.ToString() + DateTime.Now.ToString() + "\r\n";
+
+                string message = "Hi server!";
+                byte[]? msgByte = Encoding.Unicode.GetBytes(message);
+                socket.Send(msgByte, SocketFlags.None);
+
+                byte[] buffer = new byte[1024];
+                int received = socket.Receive(buffer, SocketFlags.None);
+                string response = Encoding.Unicode.GetString(buffer, 0, received);
+
+                ChatBox.Text += response;
+            }
+            catch (SocketException ex)
+            {
+                MessageBox.Show(ex.Message);
+                BtnConnect.IsEnabled = true;
+            }
+            finally
+            {
+                if (socket.Connected)
+                {
+                    socket.Shutdown(SocketShutdown.Both);
+                    socket.Close();
+                }
+            }
         }
     }
 }
