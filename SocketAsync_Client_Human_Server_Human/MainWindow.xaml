@@ -5,8 +5,27 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:SocketAsync_Client_Human_Server_Human"
         mc:Ignorable="d"
-        Title="MainWindow" Height="450" Width="800">
+        Title="Client(Human)-Server(Human)" Height="290" Width="350">
     <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition />
+            <ColumnDefinition />
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="30"/>
+            <RowDefinition Height="30"/>
+            <RowDefinition Height="30"/>
+            <RowDefinition />
+        </Grid.RowDefinitions>
 
+        <TextBlock VerticalAlignment="Center" Margin="3" Grid.Row="0" Grid.Column="0">IP Address:</TextBlock>
+        <TextBlock VerticalAlignment="Center" Margin="3" Grid.Row="0" Grid.Column="1">Port:</TextBlock>
+
+        <TextBox  VerticalAlignment="Center" Margin="3" Grid.Row="1" Grid.Column="0" PreviewTextInput="TextBox_PreviewTextInput">127.0.0.1</TextBox>
+        <TextBox VerticalAlignment="Center" Margin="3" Grid.Row="1" Grid.Column="1" PreviewTextInput="TextBox_PreviewTextInput_1">8080</TextBox>
+
+        <Button Margin="3" Width="200" Grid.ColumnSpan="2" Grid.Row="2" Grid.Column="0">Connect</Button>
+
+        <TextBox ScrollViewer.VerticalScrollBarVisibility="Auto" Margin="5" Grid.ColumnSpan="2" Grid.Row="3" Grid.Column="0" AcceptsReturn="True"/>
     </Grid>
 </Window>
