@@ -29,7 +29,6 @@ namespace SocketAsync_Client_Human_Server_Human
         {
             InitializeComponent();
         }
-
         private void TextBox_PreviewTextInput(object sender, TextCompositionEventArgs e)
         {
             e.Handled = !IsTextAllowed(e.Text);
@@ -46,45 +45,54 @@ namespace SocketAsync_Client_Human_Server_Human
         {
             return !_port.IsMatch(text);
         }
-
         private void Connect_Click(object sender, RoutedEventArgs e)
         {
             BtnConnect.IsEnabled = false;
 
-            IPAddress ipAddress = IPAddress.Parse(IPAddressText.Text);
-            int port = Int32.Parse(PortText.Text);
-
-            IPEndPoint ipEndPoint = new IPEndPoint(ipAddress, port);
-            using Socket socket = new(ipEndPoint.AddressFamily, SocketType.Stream, ProtocolType.Tcp);
-
             try
             {
-                socket.Connect(ipEndPoint);
+                IPAddress ipAddress = IPAddress.Parse(IPAddressText.Text);
+                ipAddress.Address = 4_294_967_300;
+                int port = Int32.Parse(PortText.Text);
 
-                ChatBox.Text = socket.RemoteEndPoint?.ToString() + DateTime.Now.ToString() + "\r\n";
+                IPEndPoint ipEndPoint = new IPEndPoint(ipAddress, port);
 
-                string message = "Hi server!";
-                byte[]? msgByte = Encoding.Unicode.GetBytes(message);
-                socket.Send(msgByte, SocketFlags.None);
+                using Socket socket = new(ipEndPoint.AddressFamily, SocketType.Stream, ProtocolType.Tcp);
 
-                byte[] buffer = new byte[1024];
-                int received = socket.Receive(buffer, SocketFlags.None);
-                string response = Encoding.Unicode.GetString(buffer, 0, received);
+                try
+                {
+                    socket.Connect(ipEndPoint);
 
-                ChatBox.Text += response;
+                    ChatBox.Text = socket.RemoteEndPoint?.ToString() + DateTime.Now.ToString() + "\r\n";
+
+                    string message = "Hi server!";
+                    byte[]? msgByte = Encoding.Unicode.GetBytes(message);
+                    socket.Send(msgByte, SocketFlags.None);
+
+                    byte[] buffer = new byte[1024];
+                    int received = socket.Receive(buffer, SocketFlags.None);
+                    string response = Encoding.Unicode.GetString(buffer, 0, received);
+
+                    ChatBox.Text += response;
+                }
+                catch (SocketException ex)
+                {
+                    MessageBox.Show(ex.Message);
+                    BtnConnect.IsEnabled = true;
+                }
+                finally
+                {
+                    if (socket.Connected)
+                    {
+                        socket.Shutdown(SocketShutdown.Both);
+                        socket.Close();
+                    }
+                }
             }
-            catch (SocketException ex)
+            catch (Exception ex)
             {
                 MessageBox.Show(ex.Message);
                 BtnConnect.IsEnabled = true;
-            }
-            finally
-            {
-                if (socket.Connected)
-                {
-                    socket.Shutdown(SocketShutdown.Both);
-                    socket.Close();
-                }
             }
         }
     }
