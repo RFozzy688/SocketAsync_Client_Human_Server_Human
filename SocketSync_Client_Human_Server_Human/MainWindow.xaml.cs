@@ -52,7 +52,6 @@ namespace SocketSync_Client_Human_Server_Human
             try
             {
                 IPAddress ipAddress = IPAddress.Parse(IPAddressText.Text);
-                ipAddress.Address = 4_294_967_300;
                 int port = Int32.Parse(PortText.Text);
 
                 IPEndPoint ipEndPoint = new IPEndPoint(ipAddress, port);
@@ -63,11 +62,14 @@ namespace SocketSync_Client_Human_Server_Human
                 {
                     socket.Connect(ipEndPoint);
 
-                    ChatBox.Text = socket.RemoteEndPoint?.ToString() + DateTime.Now.ToString() + "\r\n";
+                    ChatBox.Text = "Client connected to " +
+                        socket.RemoteEndPoint?.ToString() + " " + DateTime.Now.ToString() + "\r\n";
 
                     string message = "Hi server!";
                     byte[]? msgByte = Encoding.Unicode.GetBytes(message);
                     socket.Send(msgByte, SocketFlags.None);
+
+                    ChatBox.Text += message + "\r\n";
 
                     byte[] buffer = new byte[1024];
                     int received = socket.Receive(buffer, SocketFlags.None);
