@@ -16,7 +16,7 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 
-namespace SocketAsync_Client_Human_Server_Human
+namespace SocketSync_Client_Human_Server_Human
 {
     /// <summary>
     /// Interaction logic for MainWindow.xaml

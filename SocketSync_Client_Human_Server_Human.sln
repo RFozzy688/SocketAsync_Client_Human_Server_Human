@@ -1,0 +1,31 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.7.34221.43
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ServerSync", "ServerSync\ServerSync.csproj", "{6CB6651C-F24C-47F2-BDE7-C45118F72BAD}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SocketSync_Client_Human_Server_Human", "SocketSync_Client_Human_Server_Human\SocketSync_Client_Human_Server_Human.csproj", "{66EB0D8F-96AC-4DA8-AE3B-7D23DCE9A879}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{6CB6651C-F24C-47F2-BDE7-C45118F72BAD}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{6CB6651C-F24C-47F2-BDE7-C45118F72BAD}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{6CB6651C-F24C-47F2-BDE7-C45118F72BAD}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{6CB6651C-F24C-47F2-BDE7-C45118F72BAD}.Release|Any CPU.Build.0 = Release|Any CPU
+		{66EB0D8F-96AC-4DA8-AE3B-7D23DCE9A879}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{66EB0D8F-96AC-4DA8-AE3B-7D23DCE9A879}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{66EB0D8F-96AC-4DA8-AE3B-7D23DCE9A879}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{66EB0D8F-96AC-4DA8-AE3B-7D23DCE9A879}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {5909B37D-2F76-4C00-B829-6A331D08B367}
+	EndGlobalSection
+EndGlobal
