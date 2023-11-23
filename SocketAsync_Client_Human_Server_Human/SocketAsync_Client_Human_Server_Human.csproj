@@ -5,8 +5,8 @@
     <TargetFramework>net6.0-windows</TargetFramework>
     <Nullable>enable</Nullable>
     <UseWPF>true</UseWPF>
-    <AssemblyName>SocketSync_Client_Human_Server_Human</AssemblyName>
-    <RootNamespace>SocketSync_Client_Human_Server_Human</RootNamespace>
+    <AssemblyName>SocketAsync_Client_Human_Server_Human</AssemblyName>
+    <RootNamespace>SocketAsync_Client_Human_Server_Human</RootNamespace>
   </PropertyGroup>
 
 </Project>

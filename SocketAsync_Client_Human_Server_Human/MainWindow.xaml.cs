@@ -16,7 +16,7 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 
-namespace SocketSync_Client_Human_Server_Human
+namespace SocketAsync_Client_Human_Server_Human
 {
     /// <summary>
     /// Interaction logic for MainWindow.xaml
@@ -25,6 +25,8 @@ namespace SocketSync_Client_Human_Server_Human
     {
         private static readonly Regex _ipAddress = new Regex("[^0-9.]");
         private static readonly Regex _port = new Regex("[^0-9]");
+        IPEndPoint _ipEndPoint;
+        Socket _socket;
         public MainWindow()
         {
             InitializeComponent();
@@ -45,7 +47,7 @@ namespace SocketSync_Client_Human_Server_Human
         {
             return !_port.IsMatch(text);
         }
-        private void Connect_Click(object sender, RoutedEventArgs e)
+        private async void Connect_Click(object sender, RoutedEventArgs e)
         {
             BtnConnect.IsEnabled = false;
 
@@ -54,41 +56,20 @@ namespace SocketSync_Client_Human_Server_Human
                 IPAddress ipAddress = IPAddress.Parse(IPAddressText.Text);
                 int port = Int32.Parse(PortText.Text);
 
-                IPEndPoint ipEndPoint = new IPEndPoint(ipAddress, port);
-
-                using Socket socket = new(ipEndPoint.AddressFamily, SocketType.Stream, ProtocolType.Tcp);
+                _ipEndPoint = new IPEndPoint(ipAddress, port);
 
                 try
                 {
-                    socket.Connect(ipEndPoint);
+                    _socket = new Socket(_ipEndPoint.AddressFamily, SocketType.Stream, ProtocolType.Tcp);
+                    await _socket.ConnectAsync(_ipEndPoint);
 
                     ChatBox.Text = "Client connected to " +
-                        socket.RemoteEndPoint?.ToString() + " " + DateTime.Now.ToString() + "\r\n";
-
-                    string message = ChatBox.GetLineText(ChatBox.GetLastVisibleLineIndex() - 1);
-                    byte[]? msgByte = Encoding.Unicode.GetBytes(message);
-                    socket.Send(msgByte, SocketFlags.None);
-
-                    ChatBox.Text += message + "\r\n";
-
-                    byte[] buffer = new byte[1024];
-                    int received = socket.Receive(buffer, SocketFlags.None);
-                    string response = Encoding.Unicode.GetString(buffer, 0, received);
-
-                    ChatBox.Text += response;
+                        _socket.RemoteEndPoint?.ToString() + " " + DateTime.Now.ToString() + "\r\n";
                 }
                 catch (SocketException ex)
                 {
                     MessageBox.Show(ex.Message);
                     BtnConnect.IsEnabled = true;
-                }
-                finally
-                {
-                    if (socket.Connected)
-                    {
-                        socket.Shutdown(SocketShutdown.Both);
-                        socket.Close();
-                    }
                 }
             }
             catch (Exception ex)
@@ -96,6 +77,37 @@ namespace SocketSync_Client_Human_Server_Human
                 MessageBox.Show(ex.Message);
                 BtnConnect.IsEnabled = true;
             }
+        }
+        private void BtnSend_Click(object sender, RoutedEventArgs e)
+        {
+            BtnSend.IsEnabled = false;
+
+            Dispatcher.Invoke(async () =>
+            {
+                string message = "Client: " + TextInput.Text;
+                byte[]? msgByte = Encoding.Unicode.GetBytes(message);
+                await _socket.SendAsync(msgByte, SocketFlags.None);
+
+                ChatBox.Text += message + "\r\n";
+
+                byte[] buffer = new byte[1024];
+                int received = await _socket.ReceiveAsync(buffer, SocketFlags.None);
+                string response = Encoding.Unicode.GetString(buffer, 0, received);
+
+                if (response.IndexOf("<Bye>") > -1)
+                {
+                    ChatBox.Text += "Disconnected to server " + DateTime.Now.ToString();
+
+                    _socket.Shutdown(SocketShutdown.Both);
+                    _socket.Close();
+
+                    return;
+                }
+
+                ChatBox.Text += response + "\r\n";
+
+                BtnSend.IsEnabled = true;
+            });
         }
     }
 }

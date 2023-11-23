@@ -1,0 +1,31 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.7.34221.43
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ServerAsync", "ServerAsync\ServerAsync.csproj", "{3882D56F-C9F8-48FF-9B6D-6FE03D2BB90B}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SocketAsync_Client_Human_Server_Human", "SocketAsync_Client_Human_Server_Human\SocketAsync_Client_Human_Server_Human.csproj", "{4DC589EF-3072-4CD1-BDBC-791A43D7CE0B}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{3882D56F-C9F8-48FF-9B6D-6FE03D2BB90B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{3882D56F-C9F8-48FF-9B6D-6FE03D2BB90B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{3882D56F-C9F8-48FF-9B6D-6FE03D2BB90B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{3882D56F-C9F8-48FF-9B6D-6FE03D2BB90B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{4DC589EF-3072-4CD1-BDBC-791A43D7CE0B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{4DC589EF-3072-4CD1-BDBC-791A43D7CE0B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{4DC589EF-3072-4CD1-BDBC-791A43D7CE0B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{4DC589EF-3072-4CD1-BDBC-791A43D7CE0B}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {5909B37D-2F76-4C00-B829-6A331D08B367}
+	EndGlobalSection
+EndGlobal

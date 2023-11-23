@@ -2,11 +2,11 @@
 using System.Net.Sockets;
 using System.Text;
 
-namespace ServerSync
+namespace ServerAsync
 {
     internal class Program
     {
-        static void Main(string[] args)
+        static async Task Main(string[] args)
         {
             try
             {
@@ -24,27 +24,33 @@ namespace ServerSync
 
                 Console.WriteLine("Waiting for connection on port {0}", ipEndPoint);
 
-                Socket handler = server.Accept();
+                Socket handler = await server.AcceptAsync();
 
-                //while (true)
-                //{
+                while (true)
+                {
                     byte[] buffer = new byte[1024];
-                    int received = handler.Receive(buffer, SocketFlags.None);
+                    int received = await handler.ReceiveAsync(buffer, SocketFlags.None);
                     string response = Encoding.Unicode.GetString(buffer, 0, received);
                     Console.WriteLine(response);
 
-                    //if (response.IndexOf("<Bye>") > -1)
-                    //{
-                    //    break;
-                    //}
+                    if (response.IndexOf("<Bye>") > -1)
+                    {
+                        byte[] bytes = Encoding.Unicode.GetBytes("Disconnected to client " + DateTime.Now.ToString());
+                        
+                        await handler.SendAsync(bytes, SocketFlags.None);
+
+                        break;
+                    }
 
                     Console.Write("Input message: ");
                     string str = "Server: " + Console.ReadLine() + " " + DateTime.Now.ToString();
                     byte[] msg = Encoding.Unicode.GetBytes(str);
 
-                    handler.Send(msg);
+                    await handler.SendAsync(msg, SocketFlags.None);
+                }
 
-                //}
+                handler.Shutdown(SocketShutdown.Both);
+                handler.Close();
             }
             catch (SocketException ex)
             {
